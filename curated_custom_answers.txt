@@ -1,0 +1,887 @@
+QID106:
+
+Please describe your answer. empty
+
+empty result
+
+Null Null
+
+This should give a runtime error.
+
+Again neither choice satisfies
+
+NO ANSWER
+
+all equal
+
+I would prefer an empty answer
+
+Warning group by on nullable column
+
+Nothing really, I don't understand grouping by a value that is NULL...
+
+N/A
+
+No Result -- there is no valid cid to group on
+
+NULL 10
+NULL 20
+
+I like the first alternative better, but my second preference would be for the query evaluation to fail with an error saying that it is not possible to group by NULL.
+
+NULL NULL, you cannot know what is the first NULL, so you cannot calculate a minimum of its rows.
+
+Null 10
+
+Null reference error.
+
+Same answer, no row or exception
+
+I don't want to group by a null.
+
+I want an error.
+
+empty set
+
+
+
+
+QID98:
+
+Please describe your answer. empty result
+
+the empty result
+
+unknown NULL value
+
+Null, Null
+Null, Null
+
+This should give a runtime error.
+
+Both (NULL, 30) and (NULL,10), (NULL,20) suck IMO.
+
+NO ANSWER
+
+I wanted to remove a star from the second answer but it seems that it's impossible to do so
+
+Undetermined
+
+all equal
+
+I would prefer an empty answer
+
+I would prefer this would result in an error.
+
+Warning group by on nullable column
+
+Nice, that is a catchy one. It is hard to be consistent with nulls as ids vs nulls as values. Seems like when math operators are involved, as long as there is at least one value then having nulls default to zero is good. If no math  operators or functions are involved then the common null behavior is good.
+
+Nothing, really...I don't understand grouping by a value if it is all NULLs
+
+possibly an error
+
+No Result -- there is no valid ID to group on
+
+NULL 10
+NULL 20
+
+I like the second alternative better, but my second preference would be for the query evaluation to fail with an error saying that it is not possible to group by NULL.
+
+I would accept an empty set, but I can't explain why....I just...would.
+
+NULL NULL, you do not know what did = NULL means, hence you cannot sum values of the respective columns.
+
+Null 30
+
+Very tricky question. Guessing 30
+
+Null reference error.
+
+This should return no row or generate an error, as cid should be non nullable for me
+
+I don't want to be able to group by a null,
+
+So I would prefer NULL,NULL
+Or to have the row excluded or to get an explicit error
+
+Empty set
+
+
+
+QID216:
+
+To be honest I think many data scientists do not use SQL in this manner. They will typically do such queries in R or similar. They will write a procedural computation.
+
+I think NULLs appear a lot more than we want to admit, but not as much among application-enabled identifiers (even if they are not declared as keys).
+
+I wish SQL offered a way to set how to handle NULLs during a sessions, similar to the isolation level of a transaction. So, applications could tell whether they want to allow NULLs to be used in arithmetic operations, joins, etc.
+
+This included some of the more obscure NULL queries I've seen but it does a decent job of covering the potential issues.
+
+I have written a patent,[LINK OFFUSCATED] which gives and algorithmic (and correct) way of handling and interpreting NULL values.  Unfortunately the patent and its  implementation ended up being the property of Progress, which discontinued the software.  In my opinion very few people understand NULL values completely.  I have seen MANY examples purporting to explain them with fundamental errors.  Same with major DBs, only exception being MS SQL.
+
+The NOT IN vs NOT EXISTS trap does nail people in real life, fairly often.  I understand why it is the way it is, but I wish SQL had defined NOT IN as a syntactic transform to NOT EXISTS.
+
+GROUP BY NULL should cause the user and/or data designer to vanish from existence immediately.  In real life, rare, but a NULLS [not] DISTINCT clause might be useful.
+
+Imputing for "missing" data is a very real concern and affects your analyses. What is the best method to impute for "missing" data? A rhetorical question which is highly dependent on use case.
+
+iM NOT AT WORK, THEREFORE IM RESTING FROM SQL
+
+The only remark I want to make is that good database design practice is paramount in order to avoid NULL pitfalls. There's no absolutely correct answer a RDBMS can provide given a bad database design. As designers we need to create databases that exclude multiple interpretations of a dataset and need to know well how SQL works in practice.
+
+This is realistic. People do stupid things like this all the time and leave it for the accountant to sort out. That’s one reason why I left accounting.
+
+Very relevant, but I'm not sure why you're using a survey. SQL has not defined NULL as always representing a missing value or always representing an unknown value; its interpretation varies by situation, so that the application must define the intended meaning in each situation and enforce the desired results on the query using IS NULL and other tests. Things get especially complicated when a key field is NULL. For the purpose of answering this survey, I interpreted a NULL in every case as an unknown value, although this did not work well when NULLs were in join keys or foreign keys.
+
+In case you're interested, I have three white papers addressing the problem of NULLs, which build on one another: first, three-valued logic; second, unknown data; third, inapplicable data. I would be happy to send them to you if you reach out to me at [EMAIL OFFUSCATED].
+
+so nulls present conundrums, but they seem to be the best solution to the problem of fields that are not applicable or their value is not known at time of data entry. N1QL experimented with a MISSING value but my opinion is that the resulting 4-value logic is inferior to 3-value logic because it does not satisfy De Morgan's laws (preventing a lot of query plan rewrites), hence its descendant SQL++ reverted to 3-value logic. Discarding nulls before aggregation is the most reasonable rule, but it would be better if empty SUM gave 0, not null. However we cannot change the standard without breaking applications. My solution would be an aggregate TOTAL which does give 0 on empty input.
+
+Current NULL implementation is error-prone, for many reasons. The most obvious is that one can obtain a NULL value because of a mistake in SQL, because there is value in a table, or because a join/subquery returns some NULLs. NULL can still be extremely convenient, because getting tid of it would require more complex database design. But it's used by default, so most of the times it's used for a bad reason.
+In my opinion, the Rust language is a good example of how to solve the problems that NULL tries to solve. The equivalent of NULL can only be used with a special syntax. If this syntax is used, the statement is prepared to handle NULL. If it is not used, but the expression could still return a NULL, the statement is not compiled at all.
+
+null processing in SQL  is poorly understood by practioners
+
+Built-in NULL value handling reduces code complexity.  Without built-in handling of NULL values we would need to constantly add handling code for missing/unknown values.  However, given that how these situations are normally handled this just results in a huge amount of accidental complexity.
+
+Consider a hotel with a list of visit records which may be missing Check Out Date due to a current visit where the guest is still in the hotel.  In this case, the visitor's "Check Out Date" would be NULL.
+The following query will return the correct average hotel duration in days:
+SELECT
+   AVG([Check Out Date] - [Check In Date]) AS [Average Visit Duration (days)]
+FROM
+   [Hotel Visits]
+---
+To program this without NULL values would require explicitly coding for the missing value - probably by using a placeholder value (e.g. '2100-01-01') and then filtering those rows out in the WHERE clause.
+That requires extract complexity and is also likely to result in more accidental results.
+
+The more we can educate users of SQL about the handling and behaviour of NULLs, the less confusion there will be, and we can keep costs down.
+
+What I normally tell my students (I am a practitioner who occasionally teaches courses on Business Intelligence), is that NULLs are very useful and that you need to understand the difference between a "tuple" and a "set", and that if any part of a tuple is unknown then the entire tuple is by definition also unknown.  However, if a tuple is missing from a set, it is merely missing and not included in the aggregation.
+
+If the current SQL behaviours can be modified, as described/emulated in the study, a great deal of pain for data analysts while working with various datasets during data discovery phase will be reduced. It will further help a lot the regular data processing pipelines set up by data engineers too.
+
+In general I'd always try to add a non null constraint where possible, or, if nulls are being used to model the domain, document this on the row comment, which removes a bunch of the ambiguity
+not every database you work with will have been built with best practices in mind, though, so this does feel pretty relevant
+
+Because NULLs are arbitrary and data is messy, I believe that the best approach is always to explicitly define how nulls should be handled in each case. That being said, some approaches are better than others. I think a set of guidance about data cleaning and staging practices that enable intuitive handling of nulls would be a valuable resource for real-life applications. For example, guidance might recommend evaluating what a null means at any step that may introduce a null (raw data, subsequent joins, etc.) and counseling how to handle those nulls in an intuitive way.
+
+The frequency of a nulls in a dataset depends heavily on the nature of the data. Data in-flight is much more likely to have acceptable nulls, because that data does not yet exist, but will be added as the record grows. External data may also have many nulls in some fields, as they may show data that is only available for a subset of records, or that is unable to be shared for legal or policy reasons.
+
+Really curious to find out what insights come out of this research. More practically, there are behaviours surrounding NULL that can leave one perplex until you understand the intricacies of a specific database. It would be very helpful to have a common treatment of NULL values across all databases.
+
+The prevalence of dirty and missing data ought not to be underestimated. For many years, I was in charge of systems for data collection of medical data. Even such a regularized domain frequently had problems managing missing, dirty and suspicious data.
+
+understanding nulls' purpose takes significant time & thought. The interpreter might assume nulls' original purpose incorrectly & write the wrong query.
+
+I think null as default value indicates poor database design and should be avoided, though I have been guilty of using it to version data with valid_from & valid_to fields, where a null valid_to field indicates currently valid version. this was out of necessity because the database did not support infinite datetime values.
+
+in analytical systems that I architect, I try to reduce null strings to either `missing` or `not-applicable`. However, I am unable to do something similar for numeric or datetime fields. the missing vs not-applicable has implications on calculation statistics (e.g. maybe its okay to fill in the missing values with the most common occurrence before or assign randomly based on some distribution function, however nulls representing not-applicable should not be imputed in the same way).
+
+You lost me here.  I've spent time on this for a couple of hours, grabbing a few minutes here and there while getting other things done.  Lots of thoughts about the presentation and the ways in which questions are asked, but may be irrelevant depending on actual objectives.  Happy to discuss at some point.
+
+This is extremely relevant. If you have not yet seen Laetitia Avrot's talk about NULL in postgres, I highly, highly recommend it, as she covers several misconceptions about NULL, and also the SQL standard vs implementation in postgres. I definitely guessed on a few of these, and followed intuition rather than actual knowledge on some as well. (I specialize in Data Quality, where forcing "NOT NULL" creates a special black hole of problems, at least one version of my talk about data quality is also available online if you are interested.)
+
+Mostly I think this subject should be required for folks designing databases/data models. In every industry there are data collection methods that allow for unknown data, as well as non-existent data. Folks who literally have no last name, or whose last name is simply not ascertainable, so I'd love to see work that moves the untangling of those distinctions, but I do not fault you for that being out of the scope of this work.
+
+NULLs are a reality in data at Uber, from MySQL to Hive to gRPC. IMO, the most logically consistent way to handle NULLs in our environments is with disjoint union types. E.g. "optional&lt;integer&gt;" is a type whose valid values are Nothing (NULL) and Just x for any integer x. An optional&lt;integer&gt; column has a SUM if you define SUM as shorthand for SUMOFNONNULL in that context, etc.
+
+Though some of these scenarios give the opportunity to address common frustrations, they have also illustrated how difficult it would be to change the way NULLs are handled without significantly changing how other SQL syntax works.  Any changes could also lead to horrendous version control issues.  So, having given all these answers, after all I would probably prefer for no changes to be made, as I already know (and can show new users) how to deal with the presence of NULLs to obtain the answers to the questions I'm really seeking to ask.
+
+This is an interesting take on NULL, and whether ANSI standards are adequate and/or how people architect for the unknown.
+
+A lot of the questions seem to be pushing toward NULL numerics being equal to zero. That's really not feasible for any data application I can think of. Some of the query patterns as well I'd describe as "weird," or at the very least not obviously useful, such as the FULL OUTER JOIN with a GROUP BY on a nullable column. I'm not sure it's worth even considering these examples as they're clearly very edge-case oriented.
+
+I hope the researchers in this study will read some of Chris Date's writings on the topic of missing values, which delve very deep into this area and are quite well thought out.
+
+The commercial applications I work with sometimes do not support NULLs and instead use signal values. We have to program around those to avoid erroneous results.
+NULLs can cause confusion but also add valuable insight into our business processes and sometimes tell us where we have an issue with either the application or training of employees.
+
+Good questions, a bit long. Maybe randomize the order?
+
+As a general rule I only use nulls for unknown dates and missing foreign keys. Never ever for numerics (dollars, prices, rates, qty, etc), or strings (excepting foreign keys)
+
+I'm coming from programming background, where floating point "not a number" is not equal to anything, including itself. This influenced some of the answers I provided. It can be surprising if you're not used to it, but it makes sense. If a value is "Null" - how reasonable is it to expect it's the same not-a-value as the one over there in the other row?
+
+Survey wonderfully teases out the inconsistencies inherent in almost any intuition about NULL, and indeed also the inconsistencies in the way that SQL handles NULL - It differs from Python in ways I hadn’t realised despite considerable experience in both.
+
+Two minor notes: 1) this last question is going to be very difficult to interpret because there is a lot going on in each pattern and its not clear exactly what we're rating as common or uncommon. 2) for the star ratings it was not obvious to me that one could rate with 0 stars, so please interpret all my 1-star ratings as 0 stars (that is, both 0 and 1 stars mean 'this would be unacceptable as output from SQL - I would consider it a buggy implementation')
+
+NULLs are bad except where they mean: no results -- for example the product of a JOIN. This is the only acceptable case. Therefore, I would hope the study has some conclusion about the other cases, and what to do to remedy the problems their presence causes.
+
+In industries / manufactures (anything related to IoT / non connected firmwares which generates data) : patterns 2 and 3 are very frequent. First one is less frequent but may exists when human interaction is involved
+
+SQL syntax has in itself a lot of issues. While SQL is known, it is highly inadequate to be exact enough in defining whan needs to be done with missing information. Working in 6NF remedies some of these issues. Other solutions need drastic surgery on the SQL standard.
+
+Very relevant.  We have an online subscriptions system and orders can come in anonymously which we subsequently try to reconcile with customer names and existing customer IDs
+
+
+
+QID229:
+
+
+
+empty result
+
+unknown value for NULL
+
+c1,null
+c2,null
+
+Again, group by null question
+
+best
+
+Please describe your answer.
+Show zero totals for the two customers.
+
+c1 NULL
+c3 NULL
+
+c1, NULL
+c3, NULL
+
+not answering this question
+
+c1, NULL
+c3, NULL
+
+Will a full outer join, I want the valid customer IDs to be returned, with NULL as the result
+
+NULL NULL
+NULL NULL
+
+C1 NULL
+C3 NULL
+
+I guess - I would reiterate - if you're faced with a lot of this you need to clean up your design and fix the code incrementally to not support this type of data management - stat.
+
+Null null
+
+If any row is expected (for the FULL JOIN part) i would have looked for :
+cid result
+c1 NULL
+c3 NULL
+
+I want this to return an empty set
+
+no rows
+
+
+
+
+QID97:
+
+
+unknown value for NULL
+
+best
+
+Some kind of error/exception.
+
+Please describe your answer.
+
+Null, because null &lt;&gt; 0
+
+I would prefer that empty SUM is 0 but the standard says it is null.
+
+Error: Cannot SUM NULL value(s).
+
+I would prefer this would result in an error.
+
+Warning or error
+
+possibly an error
+
+NULL - no valid data
+
+c2 NULL
+
+As in my previous answer, some "extra information" would be good. Only NULL is very blunt-edged.
+
+A failure value specifying that the sum cannot be computed because 2 row(s) included NULL values.
+
+At the point that both of the fields being calculated on have NULL values, it should throw and error.  I know I'm dreaming.
+
+An aggregate with no non-NULL values is NULL, not zero
+
+This should return an empty result set.
+
+Null
+
+Null reference error.
+
+Again Null is not zero and should not be
+
+or again empty set
+
+QID96_5_TEXT
+unknown value for NULL
+
+An error should be flagged.
+
+best
+
+Some kind of error/exception.
+
+Please describe your answer.
+Null, because null &lt;&gt; 0
+
+Error: Cannot SUM NULL value(s).
+
+second answer is good
+
+I would prefer this would result in an error.
+
+Warning
+
+If all values are null it would be nice to know. It goes against the coalesce to zero, but if there are no values then 0 does not feel correct.
+
+Possibly some type of error
+
+NULL - there's no valid data for either prices or taxes
+
+o3  NULL
+
+Another answer would be o3, NULL and o3, &lt;error/some status code&gt;. This would give me a result I could work with to relay to the end user what actually happened, rather than the current result eliding the source data values
+
+A failure value specifying that both input values were NULL.
+
+NULL + NULL = unknown (NULL)
+
+There should be no answer. This should return an empty result set and force the programmer to handle NULLs.
+
+Null
+
+Null reference error.
+
+Error
+
+
+
+QID234:
+
+
+
+I do not want to assume taxes is 0
+
+Ideally an error should be flagged to the DBA or to the application, even if a result was returned.
+
+This should give a run time error.
+
+Please describe your answer.
+NULL is unknown
+
+Undetermined
+
+Some kind of error/exception.
+
+Result = 30
+
+Unknown plus something is still unknown
+
+Error: Cannot sum NULL value.
+
+Don't support NULL at all, or at least return an error for this query
+
+I would prefer this would result in an error.
+
+Error cannot add null value
+
+Aggregates handle nulls like a coalesce with zero, it would be nice to have other math operators handle them as well.
+
+Possibly some kind of error
+
+NULL -- because I prefer to explicitly define null handling wherever relevant.
+
+&gt;= 30
+
+A failure-value in the result column, specifying that the result could not be computed because of addition with NULL.
+
+30
+
+Please describe your answer. Null is acceptable as a query result because it means nothing matches your description. Null in and of itself is not acceptable as a description or value itself within the table.
+
+30 + NULL = NULL
+
+Substituting a default value for NULL is a strategy which is also encountered in RPC settings (e.g. in Protobuf), where it causes no end of problems and must be worked around.
+
+taxes should be NOT NULL, have a value of 0 and the answer should be 30.
+
+If one value is unknown and the other is known, the ideal would be to only take the non-null values into account. Barring that returning NULL at least tells me that I am getting an undefined result.
+
+This is the ANSI standard - arithmetic with NULL results in NULL.  NULL should be managed prior to this math.
+
+Null
+
+The equivalent of a null reference error.
+
+First version would be ideal to me :
+The type of column with null value is inferred as same as other column in operation, except if specified otherwise in the table scheme (python style).
+
+o1, NULL  because the value for taxes is not zero and the price is not zero.
+
+Here NULL is doing exactly what it is supposed to do.
+
+An calculation exception should also be raised
+
+I would expect this to error.
+
+
+
+QID236:
+
+
+NULL plus 0 is NULL
+
+An error should be flagger to the DBA or to the application, even if a result is returned.
+
+This should give a run time error
+
+Please describe your answer.
+NULL must always be considered as unknown
+
+I guess that my answer is not the one returned by a dbms but this is the one I'd expect
+
+Some kind of error/exception.
+
+Please describe your answer.
+Result = 30.
+
+Error: Cannot sum  NULL value.
+
+I don't like NULL. But current SQL behaviour is practical, in this case
+
+I would prefer this would result in an error.
+
+Error cannot sum null value
+
+Aggregate behavior with nulls feels correct.
+
+Possibly some kind of error
+
+30 -- because I expect aggregate functions to ignore nulls unless explicitly instructed otherwise.
+
+c1   &gt;=30
+
+Showing c1, 30 and c1, NULL
+
+A failure value in the result column specifying that the sum could not be computed since the addition included NULL.
+
+30
+
+Null is not a value.
+
+sum([30, NULL]) = NULL
+
+Please describe your answer.
+
+If (o1, Just 30), then also (o2, Nothing), i.e. (o2, NULL) for the definition of SUM I would prefer.
+
+I'd add WHERE price IS NOT NULL and expect c1|30
+
+Aggregation functions should tally non-null values and ignore nulls. Barring that, give me NULL so I can identify that I have an unexpected value.
+
+NULL values should be eliminated by an aggregate function as part of its process and not be included or pollute the results
+
+Null
+
+The equivalent of a null reference error.
+
+c1,30  is what I would get but I would prefer null.
+ I am used to nulls being ignored in aggregates and if they weren't I would use  some syntactic sugar to ignore them.
+
+LIKE SUM (field)WHERE field  IS NOT NULL
+
+Adding across records and adding within a record are NOT the same thing.
+
+What I would like is some way to know HOW MANY nulls are being ignored.
+
+query is inconclusive. desired outcome could be 1 or 3. Rewriting to 6NF will solve this ambiguity
+⁠
+
+
+QID93:
+
+
+
+I do not like NULL arithmetic.
+
+An error should be flagged, even if a result is returned.
+
+This should give a runtime error
+
+Undetermined
+
+Unambiguous answer
+
+Some kind of error/exception.
+
+Please describe your answer.
+Result = 30
+
+Error: Cannot sum NULL value(s).
+
+I really wish it returned an error
+
+I would prefer this would result in an error.
+
+Error
+
+Consistency of math operations in handling nulls would be great.
+
+possibly some kind of error
+
+NULL -- though for me this is more about how 'sum' treats columns than nulls. I would like to have a function where I can provide a list of columns and have an aggregate function applied across them, i.e. sum(price, taxes).
+
+c1   &gt;=30
+
+c1, 30 and c1, 0 and c1, NULL. In this way, I can filter intelligently on the results, as I would know all the different combinations explicitly
+
+A failure value specifying that the sum could not be computed, since the one or more of the value computations resulted in failure, preferably with addition information saying that in 1 case(s) the value computation failed because the 'taxes' column was NULL, and in 1 case(s) the value computation failed because the 'price' column was NULL.
+
+30
+
+An aggregate over an unknown is still unknown.  Unless a non-ANSI standard setting is used at least.
+
+Null
+
+The equivalent of a null reference error.
+
+As data is inconsistent this should throw an error.
+
+Here Null is most desirable and correct.
+
+Again what would be useful would be a very easy way to identify null values (though arguably this already exists)
+
+Could also be empty set, ie zero records depending on more precise semantics
+
+This should be an errror
+
+
+
+QID109:
+
+
+
+unknown value for NULL
+
+best
+
+Some kind of error/exception.
+
+possibly an error
+
+c3 NULL as above is my preferred answer, because there is no valid data to sum
+
+A failure value specifying that the addition cannot be computed because o.price is a non-existing value from an outer join, and o.taxes is a non-existing value from an outer join.
+
+C3 null
+
+Because I am explicitly looking for all cids (and presumably have some reason to do so)  in this case I want the nulls
+
+
+
+QID119:
+
+
+
+unknown price
+
+An error should be flagged even if the result is returned.
+
+unambiguous answer
+
+Some kind of error/exception.
+
+Please describe your answer.
+Minimum price = 30. The other two are wrong.
+
+Error: Cannot use MIN on NULL value(s).
+
+I don't have a good solution, if NULL is supported
+
+I would prefer this would result in an error.
+
+Warning min on nullable columns
+
+possibly some type of error
+
+30 - if null represents 0 it should be explicitly defined
+
+c1   &lt;=30
+
+A failure value in the minimum column specifying that the min cannot be computed because 1 row(s) was NULL.
+
+30
+
+NULL values should be eliminated by an aggregate function.
+
+30
+
+Null reference error.
+
+Again SQL Sucks, both 1 or 3 could be correct based in 6NF semantics
+
+
+
+
+QID84:
+
+
+Access has NZ() same as IsNULL().
+
+In our DB designs, whether a column can/cannot be null is always discriminated by the value of another column
+
+NULLIF() in POSTGRESQL, ALSO CASE CAN BE USED FOR NULL MANAGEMENT
+
+CONCAT_WS('', column1, column2) because it treats NULL as an empty string
+
+In Anchor modeling there are no NULL values. Instead, being 6NF, missing/sparse information is represented by the absence of a row.
+
+NVL()
+
+LEN(ISNULL(x,''))&gt;0
+
+NVL, NVL2
+
+NULLIF
+
+NULLIF(), which I assume is not the same as IFNULL() listed above. (I've never seen that.)
+
+Nvl and nvl2 in Oracle
+
+CASE WHEN [column] IS NULL
+
+LEFT JOIN
+
+previous question: I never specify Not Null" on Primary Key, since PK implies "not null" in a decent database.
+
+Custom NULL values to fit with wrongly loaded NULL values into the data base, when documented
+
+IS NULL
+
+Is Null
+
+
+
+
+
+QID58:
+
+
+Elastic
+
+Images
+
+SAS, STATA, R
+
+time series
+
+JSON-LD
+
+YAML
+
+Protobuf,  GraphQL
+
+This pertains to what I use now. In the past, I used a lot more (e.g. relational, RDF)
+
+DataFrame in Pandas
+
+shell scripts, etc. and whatever else when needed.
+
+Proprietary.
+⁠
+
+
+
+QID200:
+
+
+
+even if nothing is returned, an error/warning should be flagged to the DBA or to the application.
+
+clear
+
+too much trouble to figure out the full outer join and apply the query so I am not answering
+
+NULL sum is appropriate, since there are no valid rows to sum. C1 and C3 should appear in the result, because it's a full outer join.
+
+c1 NULL
+c3 NULL
+
+I'm not thinking I understand the notation.  I'm looking at the Orders table above and it looks to me that it has no data values at all.
+
+C1 null
+C3 null
+
+I don't want anything back
+
+
+
+QID118:
+
+
+This situation should be avoided with a a FK..
+
+cid     result
+c3      undetermined
+
+best
+
+c3 30 is my preferred answer, because there is valid data for the aggregate function
+
+c3   &gt;=30
+
+Once again, some indication that there was a 30 value, but also a NULL for c3. The options above are plain wrong, or remove too much information
+
+A failure value specifying that the sum could not be computed because 1 row(s) was a non-existing row from an outer join.
+
+60
+
+C3 30
+
+SQL not precise enough
+
+
+
+
+QID80:
+
+
+MariaDB
+
+Ingres
+
+Microsoft Access
+
+MariaDB
+
+Microsoft Access
+
+MS Access
+
+SAP HANA
+
+MariaDB, Snowflake
+
+SAP HANA, Sybase IQ, Sybase SQLAnywhere
+
+Clickhouse
+
+Google Big Query
+
+Sybase
+
+Sybase
+
+Sybase
+
+AWS Aurora
+
+AWS Athena
+
+My answers pertain to what I used frequently in the past. Nowadays, I do not use relational databases
+
+BigQuery
+
+Snowflake is technically not relational. If you're going to list Snowflake, then you should also list BigQuery and Athena since they all use similar methodologies and paradigms.
+
+4D
+
+Local Access database (.accdb)
+
+SAS
+
+Hadoop Hive
+
+
+
+QID64:
+
+
+None of the choices is right.  A NULL value describes and entry which is not known or not applicable in a particular field.
+
+N/A
+
+The question is not clear. Other possibilities are: the value exists but is not known at the moment, or the value may/will exist in the future
+
+Absence of a given attribute.
+
+It depends on what the developers/DBAs defined for such field. It should be documented, otherwise future maintenance may not hold the integrity requirement previously thought. A proper standardization would be welcome
+
+The data will be inserted later for technical reasons
+
+The value does not exist or the value exists and is equal to an unknown constant in the domain of the attribute
+
+If there is a foreign key relationship present and a left, right, or full outer join is being used, it may indicate missing information from another source.
+
+It is impossible to know what NULL means without understanding the intent of the one who put it there in the first place. Unfortunately, I've seen it used for all of the above.
+
+The database designer is an idiot. NULLs should not apply in the logical model. NULLs are useful in the physical model.
+
+The column is inapplicable and hence the value is inapplicable.
+
+The value has not been entered.
+
+Nulls can be common when a data source changes structure to add new fields that don't exist in the past.
+
+This is structural to most RDBMS.  You have to maintain control over NULL values with application code.  So if I see a null I obviously want to know the provenance I want to look at the application code that was executing when that value was  created.
+
+I think of NULL as the "nothing" option of an optional (1 + x) type. If consistently interpreted in this way, there is nothing wrong with NULL (key word: consistently).
+
+The value is now known yet, but may be known in the future or has been known in the past.
+
+NULL is not a value, it is a state of the value. Mostly it is the state that no decision has been made yet or the decision was rescinded and there is no decision at this time.
+
+NULL is a metadata bit that represents a statement that information about this field cannot be expressed solely through the data domain defined for the field. All of the above (and other meanings) are examples of information that cannot be directly expressed via simple domains.
+
+it can be replaced with a truthy value. e.g. upsert w/ coalesce
+
+1:1 link does not exist; attribute value is not set.
+
+As there is a bug does not completely satisfy me, i prefer to divide it into:
+- Data collection system (Extract) is not perfectly matching data generation system (data is not collected)
+- Transformations (Transform) are not OK and loses information (data is lost during process).
+
+The null placeholder is best thought of as a closed box.  We don't look inside the box and therefore we know nothing about it.
+
+Is known but hidden
+Outside domain
+Calculation error
+
+
+
+
+QID113:
+
+
+equal
+
+c3 30 is my preferred result, because 30 is the only valid price
+
+c3   &gt;=30
+
+Both c3 and {30, NULL} ought to be returned
+
+A failure value specifying that the min could not be computed because 1 row(s) provided a non-existing outer join value.
+
+C3 30
+
+Note... too many questions. I bet the answers towards the end see more incorrect answers.
+
+SQL Ambiguity in aggregate queries with missing values
+
+QID120_7_TEXT
+Theta join with BETWEEN AND
+
+CROSS JOIN, semijoin
+
+lateral join
+
+CROSS JOIN
+
+Cross
+
+CROSS JOIN
